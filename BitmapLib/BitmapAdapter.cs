@@ -48,14 +48,6 @@ namespace BitmapLib
         }
 
         /// <summary>
-        /// Creates a BitmapAdapter with a null Bitmap;
-        /// </summary>
-        public BitmapAdapter()
-        {
-            Image = null;
-        }
-
-        /// <summary>
         /// Creates a Bitmap from a 2D array containing intensity values of pixels.
         /// </summary>
         /// <param name="IntensityMatrix">Integer array containing intensity values of pixels (0 to 255)</param>
