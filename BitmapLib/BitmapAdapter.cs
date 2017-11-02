@@ -15,8 +15,14 @@ namespace BitmapLib
     /// </summary>
     public class BitmapAdapter
     {
-        Bitmap Image { get; set; }
+        /// <summary>
+        /// Bitmap which is used for processing.
+        /// </summary>
+        public Bitmap Image { get; set; }
 
+        /// <summary>
+        /// Defines the parameter for which to generate a 2D Array.
+        /// </summary>
         public enum MatrixType { Red, Green, Blue, Alpha };
 
         /// <summary>
@@ -297,6 +303,40 @@ namespace BitmapLib
         /// </summary>
         /// <returns>A grayscale Bitmap. Null if BitmapAdapter contains no Bitmap.</returns>
         public Bitmap Grayscale()
+        {
+            if (Image == null)
+                return null;
+
+            Bitmap newImage = new Bitmap(Image.Width, Image.Height);
+            Graphics g = Graphics.FromImage(newImage);
+            ColorMatrix grayTransform = new ColorMatrix
+            (
+                new float[][]
+                {
+                        new float[] {0.299f,0.299f,0.299f,0,0},
+                        new float[] {0.587f,0.587f,0.587f,0,0},
+                        new float[] {0.114f,0.114f,0.114f,0,0},
+                        new float[] {0,0,0,1,0},
+                        new float[] {0,0,0,0,1}
+                }
+            );
+
+            ImageAttributes attributes = new ImageAttributes();
+
+            attributes.SetColorMatrix(grayTransform);
+
+            g.DrawImage(Image, new Rectangle(0, 0, Image.Width, Image.Height), 0, 0, Image.Width, Image.Height, GraphicsUnit.Pixel, attributes);
+
+            g.Dispose();
+            return newImage;
+        }
+
+        /// <summary>
+        /// Creates a Grayscale Bitmap from color Bitmap.
+        /// </summary>
+        /// <param name="Image">Color image.</param>
+        /// <returns>Returns a grayscale bitmap of the image.</returns>
+        public static Bitmap Grayscale(Bitmap Image)
         {
             if (Image == null)
                 return null;
