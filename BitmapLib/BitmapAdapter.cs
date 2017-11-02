@@ -23,7 +23,25 @@ namespace BitmapLib
         /// <summary>
         /// Defines the parameter for which to generate a 2D Array.
         /// </summary>
-        public enum MatrixType { Red, Green, Blue, Alpha };
+        public enum MatrixType
+        {
+            /// <summary>
+            /// Red parameter of Bitmap.
+            /// </summary>
+            Red, 
+            /// <summary>
+            /// Green Parameter of Bitmap.
+            /// </summary>
+            Green,
+            /// <summary>
+            /// Blue Parameter of Bitmap.
+            /// </summary>
+            Blue,
+            /// <summary>
+            /// Alpha Parameter of Bitmap.
+            /// </summary>
+            Alpha
+        };
 
         /// <summary>
         /// Creates a new BitmapAdapter using an existing Bitmap.
@@ -295,6 +313,7 @@ namespace BitmapLib
                 default:
                     break;
             }
+            Image.UnlockBits(ImageData);
             return outputMatrix;
         }
 
@@ -332,10 +351,10 @@ namespace BitmapLib
         }
 
         /// <summary>
-        /// Creates a Grayscale Bitmap from color Bitmap.
+        /// Converts a Bitmap to grayscale.
         /// </summary>
         /// <param name="Image">Color image.</param>
-        /// <returns>Returns a grayscale bitmap of the image.</returns>
+        /// <returns>A grayscale bitmap of the image.</returns>
         public static Bitmap Grayscale(Bitmap Image)
         {
             if (Image == null)
