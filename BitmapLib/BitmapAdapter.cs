@@ -53,6 +53,9 @@ namespace BitmapLib
         /// <param name="IntensityMatrix">Integer array containing intensity values of pixels (0 to 255)</param>
         public void MatrixToBitmap(int[,] IntensityMatrix)
         {
+            if (Image == null)
+                throw new NullReferenceException("Image cannot be null");
+
             Bitmap newImage = new Bitmap(IntensityMatrix.GetLength(0), IntensityMatrix.GetLength(1));
             BitmapData imageData;
             IntPtr imagePointer;
@@ -98,6 +101,8 @@ namespace BitmapLib
         /// <param name="BMatrix">2D Array of B values of the pixels.</param>
         public void MatrixToBitmap(int[,] RMatrix, int[,] GMatrix, int[,] BMatrix)
         {
+            if (Image == null)
+                throw new NullReferenceException("Image cannot be null");
             Bitmap newImage = new Bitmap(RMatrix.GetLength(0), RMatrix.GetLength(1));
             BitmapData imageData;
             IntPtr imagePointer;
@@ -155,6 +160,9 @@ namespace BitmapLib
         /// <param name="BMatrix">2D Array of B values of the pixels.</param>
         public void MatrixToBitmap(int[,] AMatrix, int[,] RMatrix, int[,] GMatrix, int[,] BMatrix)
         {
+            if (Image == null)
+                throw new NullReferenceException("Image cannot be null");
+
             Bitmap newImage = new Bitmap(RMatrix.GetLength(0), RMatrix.GetLength(1));
             BitmapData imageData;
             IntPtr imagePointer;
