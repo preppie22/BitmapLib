@@ -80,16 +80,22 @@ namespace BitmapLib
             if (Image == null)
                 throw new NullReferenceException("Image cannot be null");
 
-            Bitmap newImage = new Bitmap(IntensityMatrix.GetLength(0), IntensityMatrix.GetLength(1));
+            int ImageWidth = IntensityMatrix.GetLength(0);
+            int ImageHeight = IntensityMatrix.GetLength(1);
+
+            Bitmap newImage = new Bitmap(ImageWidth, ImageHeight, PixelFormat.Format32bppArgb);
             BitmapData imageData;
             IntPtr imagePointer;
 
-            byte[] rawImage = new byte[IntensityMatrix.Length * 4];
-            int i = 0, x = 0, y = 0, correctedValue;
+            imageData = newImage.LockBits(new Rectangle(0, 0, ImageWidth, ImageHeight), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
 
-            for(x=0; x < IntensityMatrix.GetLength(0); x++)
+            byte[] rawImage = new byte[ImageWidth * ImageHeight * 4];
+
+            int x = 0, y = 0, correctedValue;
+            int offset = 0;
+            for (y = 0; y < ImageHeight; y++)
             {
-                for(y=0; y < IntensityMatrix.GetLength(1); y++)
+                for (x = 0; x < ImageWidth; x++)
                 {
                     if (IntensityMatrix[x, y] > 255)
                         correctedValue = 255;
@@ -98,15 +104,13 @@ namespace BitmapLib
                     else
                         correctedValue = IntensityMatrix[x, y];
 
-                    rawImage[i] = Convert.ToByte(correctedValue);
-                    rawImage[i + 1] = Convert.ToByte(correctedValue);
-                    rawImage[i + 2] = Convert.ToByte(correctedValue);
-                    rawImage[i + 3] = 255;
-                    i += 4;
+                    offset = ((x * ImageHeight) + y) * 4;
+                    rawImage[offset + 0] = Convert.ToByte(correctedValue);
+                    rawImage[offset + 1] = Convert.ToByte(correctedValue);
+                    rawImage[offset + 2] = Convert.ToByte(correctedValue);
+                    rawImage[offset + 3] = 255;
                 }
             }
-
-            imageData = newImage.LockBits(new Rectangle(0, 0, IntensityMatrix.GetLength(0), IntensityMatrix.GetLength(1)), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
 
             imagePointer = imageData.Scan0;
 
@@ -114,7 +118,7 @@ namespace BitmapLib
 
             newImage.UnlockBits(imageData);
 
-            Image = newImage;
+            Image = new Bitmap (newImage);
         }
 
         /// <summary>
