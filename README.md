@@ -1,5 +1,5 @@
 # BitmapLib
-A C# library with some fast methods to interface between 2D arrays and Bitmaps. This library is still under development. I'll be adding classes and methods as and when I use them in my work.
+A C# library with some fast methods to interface between 2D arrays and Bitmaps. This was created for use in simple image manipulation applications.
 
 ## Compilation
 This library has been built using Visual C# 2017. You can simply open the solution file in Visual Studio and hit Build to get a DLL and XML file.
@@ -13,4 +13,4 @@ using BitmapLib;
 ```
 
 ## WARNING
-This code has NOT been tested extensively enough. Please ensure that you test it before using it in your project.
+This code has NOT been tested extensively enough. Please ensure that you test it before using it in your project. I'm not responsible if your code breaks as a result of using this library.
